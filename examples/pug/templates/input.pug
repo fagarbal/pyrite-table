@@ -1,0 +1,14 @@
+mixin pyrite-table-input
+	.input-group
+		input.form-control(type='text', id='input-' + attributes.id, placeholder=attributes.placeholder)
+		span.input-group-btn
+			button.btn(id='button-' + attributes.id, class=attributes.color || 'btn-default')
+				if attributes.text
+					span #{attributes.text}
+
+				if attributes.icon && attributes.text
+					|
+					|
+
+				if attributes.icon
+					i(class=attributes.icon)

@@ -1,0 +1,30 @@
+{
+	"table": "table-example",
+
+	"fields": [{
+		"title": "Username",
+		"field": "login.username",
+		"id": "username"
+	}, {
+		"title": "Name",
+		"field": "name.first",
+		"id": "name"
+	}, {
+		"title": "Last Name",
+		"field": "name.last",
+		"id": "lastname"
+	}, {
+		"title": "Street",
+		"field": "location.street",
+		"id": "street"
+	}],
+
+	"search": {
+		"id": "search"
+	},
+
+	"text": {
+		"total": "total-text",
+		"filter": "filter-text"
+	}
+}

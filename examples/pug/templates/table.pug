@@ -1,0 +1,13 @@
+mixin pyrite-table
+	.table-responsive
+		table.table.table-striped.table-bordered(id=attributes.id)
+	p.pull-right
+		| Showing
+		|
+		strong(id=attributes.filter) 0
+		|
+		| of
+		|
+		strong(id=attributes.total) 0
+		|
+		| results
