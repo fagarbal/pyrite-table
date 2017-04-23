@@ -7,6 +7,8 @@ export default class Table {
 		this.model = model;
 
 		this.orderField = {};
+
+		this.currentPage = 1;
 	}
 
 	load(callback) {

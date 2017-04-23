@@ -1,6 +1,24 @@
 mixin pyrite-table
 	.table-responsive
 		table.table.table-striped.table-bordered(id=attributes.id)
+
+	p.pull-left
+		button.btn.btn-primary.btn-xs(id=attributes.pagination + '-first') &lt;&lt;
+		button.btn.btn-primary.btn-xs(id=attributes.pagination + '-previous') &lt;
+		|
+		| page
+		|
+		strong(id=attributes.pagination + '-current') 0
+		|
+		| of
+		|
+		strong(id=attributes.pagination + '-total') 0
+		|
+		| pages
+		|
+		button.btn.btn-primary.btn-xs(id=attributes.pagination + '-next') &gt;
+		button.btn.btn-primary.btn-xs(id=attributes.pagination + '-last') &gt;&gt;
+
 	p.pull-right
 		| Showing
 		|

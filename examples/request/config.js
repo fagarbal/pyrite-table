@@ -47,5 +47,10 @@ export default {
 	text: {
 		total: "total-text",
 		filter: "filter-text"
+	},
+
+	pagination: {
+		id: "pagination",
+		limit: 10
 	}
 };

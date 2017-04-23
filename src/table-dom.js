@@ -2,6 +2,8 @@ import utils from './utils.js';
 
 export default class TableDom {
 	constructor(config) {
+		this.config = config;
+
 		this.iconMapper = {
 			fa: {
 				asc: 'fa-sort-asc',
@@ -23,6 +25,14 @@ export default class TableDom {
 				total: document.getElementById(config.text.total),
 				filter: document.getElementById(config.text.filter)
 			},
+			pagination: {
+				first: document.getElementById(config.pagination.id + '-first'),
+				previous: document.getElementById(config.pagination.id + '-previous'),
+				next: document.getElementById(config.pagination.id + '-next'),
+				current: document.getElementById(config.pagination.id + '-current'),
+				total: document.getElementById(config.pagination.id + '-total'),
+				last: document.getElementById(config.pagination.id + '-last')
+			},
 			fields: {}
 		};
 
@@ -42,15 +52,18 @@ export default class TableDom {
 
 	draw(controller) {
 		this.clean();
-		this.__addEvents(controller);
+		if (!this.hasEvents) this.__addEvents(controller);
+		this.__drawPagination(controller);
 		this.__drawHeaders(controller);
 		this.__drawBody(controller);
 		this.__drawText(controller);
 	}
 
 	__addEvents(controller) {
+		this.hasEvents = true;
 		this.__setSimpleSearch(controller);
 		this.__setAdvancedSearch(controller);
+		this.__setPagination(controller);
 	}
 
 	__drawCol(parent, row, col) {
@@ -74,6 +87,23 @@ export default class TableDom {
 				textElements.filter.innerText = filterText;
 			}
 		}
+	}
+
+	__drawPagination(controller) {
+		const model = controller.filter || controller.model;
+		const total = parseInt(model.length / this.config.pagination.limit);
+
+		controller.totalPages = model.length % this.config.pagination.limit === 0 ? total : total + 1;
+
+		if (model.length < this.config.pagination.limit * controller.currentPage) controller.currentPage = controller.totalPages;
+
+		const paginationElements = this.elements.pagination;
+
+		paginationElements.current.innerText = controller.currentPage;
+		paginationElements.total.innerText = controller.totalPages;
+
+		paginationElements.previous.disabled = paginationElements.first.disabled = controller.currentPage <= 1;
+		paginationElements.next.disabled = paginationElements.last.disabled = controller.currentPage >= controller.totalPages;
 	}
 
 	__drawHeaders(controller) {
@@ -119,7 +149,9 @@ export default class TableDom {
 	__drawBody(controller) {
 		const body = document.createElement('tbody');
 
-		const model = controller.filter || controller.model;
+		let model = controller.filter || controller.model;
+
+		model = model.slice((controller.currentPage - 1) * this.config.pagination.limit, controller.currentPage * this.config.pagination.limit);
 
 		model.forEach((row) => {
 			const tr = document.createElement('tr');
@@ -175,6 +207,28 @@ export default class TableDom {
 					this.__setSearchTimeout(controller, controller.advancedSearch, inputs);
 				});
 			}
+		});
+	}
+
+	__setPagination(controller) {
+		this.elements.pagination.previous.addEventListener('click', () => {
+			controller.currentPage--;
+			controller.reload(controller.filter || controller.model);
+		});
+
+		this.elements.pagination.next.addEventListener('click', () => {
+			controller.currentPage++;
+			controller.reload(controller.filter || controller.model);
+		});
+
+		this.elements.pagination.first.addEventListener('click', () => {
+			controller.currentPage = 1;
+			controller.reload(controller.filter || controller.model);
+		});
+
+		this.elements.pagination.last.addEventListener('click', () => {
+			controller.currentPage = controller.totalPages;
+			controller.reload(controller.filter || controller.model);
 		});
 	}
 }

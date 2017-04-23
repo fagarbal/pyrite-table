@@ -69,14 +69,19 @@ pyrite.Table.load(config, model);
 		}
 	}, ... ],
 
-	"search": {
-		"id": "id-for-global-search",
-		"fields": ["property.in.model", "another.property", ... ] // Optional: By default all fields.
+	search: {
+		id: "id-for-global-search",
+		fields: ["property.in.model", "another.property", ... ] // Optional: By default all fields.
 	},
 
-	"text": {
-		"total": "id-total-text",
-		"filter": "id-filter-text"
+	text: {
+		total: "id-total-text",
+		filter: "id-filter-text"
+	},
+
+	pagination: {
+		id: "id-pagination",
+		limit: Number // Number of results per page.
 	}
 }
 ```
