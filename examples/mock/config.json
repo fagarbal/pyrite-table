@@ -1,0 +1,34 @@
+{
+	"table": "table-example",
+
+	"fields": [{
+		"title": "Name",
+		"field": "name",
+		"id": "name",
+		"autorefresh": 500
+	}, {
+		"title": "Last Name",
+		"field": "lastname",
+		"id": "lastname",
+		"autorefresh": 500
+	}, {
+		"title": "Age",
+		"field": "age",
+		"id": "age",
+		"autorefresh": 500
+	}, {
+		"title": "City",
+		"field": "city",
+		"id": "city",
+		"autorefresh": 500
+	}],
+
+	"search": {
+		"id": "search"
+	},
+
+	"text": {
+		"total": "total-text",
+		"filter": "filter-text"
+	}
+}
