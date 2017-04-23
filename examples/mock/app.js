@@ -1,4 +1,4 @@
-import Table from '~/src/table.js';
+import Table from 'pyrite-table';
 import tableConfig from './config.json';
 import tableMock from './mock.json';
 

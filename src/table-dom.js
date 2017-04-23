@@ -53,10 +53,11 @@ export default class TableDom {
 		this.__setAdvancedSearch(controller);
 	}
 
-	__drawCol(parent, value, type = 'td') {
-		const td = document.createElement(type);
+	__drawCol(parent, row, col) {
+		const td = document.createElement('td');
 
-		td.innerText = value;
+		if (col.template) td.innerHTML = col.template(row);
+		else td.innerText = utils.getPropertyByString(row, col.field);;
 
 		parent.appendChild(td);
 	}
@@ -85,9 +86,9 @@ export default class TableDom {
 		this.elements.table.appendChild(header);
 	}
 
-	__drawOrder(controller, tr, field) {
-		const th = document.createElement('th');
-		const anchor = document.createElement('a');
+	__drawLink(controller, field, title) {
+		title.href = 'javascript:void(0)';
+
 		const icon = document.createElement('i');
 
 		icon.className = `fa `;
@@ -97,24 +98,34 @@ export default class TableDom {
 		if (faIcon) icon.className += faIcon;
 		else icon.className += 'fa-sort';
 
-		anchor.innerText = field.title;
-		anchor.href = 'javascript:void(0)';
+		title.addEventListener('click', controller.order.bind(controller, field));
 
-		anchor.addEventListener('click', controller.order.bind(controller, field.field));
+		title.appendChild(icon);
+	}
 
-		anchor.appendChild(icon);
-		th.appendChild(anchor);
+	__drawOrder(controller, tr, field) {
+		const hasOrder = field.order || (field.field && field.order !== false);
+		const th = document.createElement('th');
+		const title = document.createElement(hasOrder ? 'a' : 'span');
+
+		title.innerText = field.title;
+
+		if (hasOrder) this.__drawLink(controller, field, title);
+
+		th.appendChild(title);
 		tr.appendChild(th);
 	}
 
 	__drawBody(controller) {
 		const body = document.createElement('tbody');
 
-		(controller.filter || controller.model).forEach((row) => {
+		const model = controller.filter || controller.model;
+
+		model.forEach((row) => {
 			const tr = document.createElement('tr');
 
 			controller.fields.forEach((col) => {
-				this.__drawCol(tr, utils.getPropertyByString(row, col.field));
+				this.__drawCol(tr, row, col);
 			});
 
 			body.appendChild(tr);

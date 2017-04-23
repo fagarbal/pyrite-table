@@ -52,18 +52,26 @@ pyrite.Table.load(config, model);
 
 ``` javascript
 {
-	"table": "id-table",
+	table: "id-table",
 
-	"fields": [{
-		"title": "Col Title",
-		"field": "property.in.model",
-		"id": "id-for-filtering",
-		"autorefresh": Number // Optional: Number of miliseconds.
+	fields: [{
+		title: "Col Title",
+		field: "property.in.model", // Optional if there is a custom template.
+		id: "id-for-filtering", // Use only when has a field value.
+		autorefresh: Number, // Optional: Number of miliseconds.
+		template: (row) => { // Optional: Custom template function.
+			return `<a href="mailto:${row.field_name}">${row.field_name}</a>`;
+		},
+		order: (a, b) => { // Optional: Custom order function or disabled if is equal to false.
+			if (a.field_name > b.field_name) return 1;
+			else if (a.field_name < b.field_name) return -1;
+			return 0;
+		}
 	}, ... ],
 
 	"search": {
 		"id": "id-for-global-search",
-		"fields": ["id-field", "id-another-field", ... ] // Optional: By default all fields.
+		"fields": ["property.in.model", "another.property", ... ] // Optional: By default all fields.
 	},
 
 	"text": {
@@ -95,5 +103,5 @@ pyrite.Table.load(config, model);
 	"lastname": "Rodriguez",
 	"age": 33,
 	"city": "Loroñe"
-}]
+}, ... ]
 ```

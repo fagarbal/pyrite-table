@@ -24,8 +24,7 @@
 	}],
 
 	"search": {
-		"id": "search",
-		"fields": ["name", "lastname"]
+		"id": "search"
 	},
 
 	"text": {

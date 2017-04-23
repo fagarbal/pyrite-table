@@ -1,6 +1,6 @@
-import utils from '~/src/utils.js';
-import Table from '~/src/table.js';
-import tableConfig from './config.json';
+import utils from 'pyrite-table/utils.js';
+import Table from 'pyrite-table';
+import tableConfig from './config.js';
 
 utils.request('https://randomuser.me/api/?results=200&nat=es')
 .then((tableObject) => {

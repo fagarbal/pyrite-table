@@ -74,7 +74,7 @@ gulp.task('build:js-min', () =>
 );
 
 gulp.task('build:js-build', () =>
-	browserify(['src/table.js'])
+	browserify(['src/index.js'])
 	.transform(stringify(['.html']))
 	.transform(babelify)
 	.bundle()

@@ -24,12 +24,16 @@ export default class Table {
 	simpleSearch(searchText) {
 		const searchValue = utils.transformString(searchText);
 
-		if (this.config.search && this.config.search.fields && !this.searchFields) {
-			this.searchFields = this.fields.filter((field) => this.config.search.fields.includes(field.id));
+		if (!this.searchFields) {
+			if (this.config.search && this.config.search.fields) {
+				this.searchFields = this.fields.filter((field) => this.config.search.fields.includes(field.field));
+			} else {
+				this.searchFields = this.fields.filter((field) => field.field);
+			}
 		}
 
 		const searchFilter = this.model.filter((row) => {
-			return (this.searchFields || this.fields).some((field) => {
+			return this.searchFields.some((field) => {
 				const rowValue = utils.transformString(utils.getPropertyByString(row, field.field));
 
 				return rowValue.indexOf(searchValue) >= 0;
@@ -60,27 +64,37 @@ export default class Table {
 	}
 
 	order(field) {
+		const nameField = field.field;
+
 		let greater = 1;
 		let less = -1;
 
-		if (this.orderField[field] === 'asc') {
+		if (this.orderField[nameField] === 'asc') {
 			greater = -1;
 			less = 1;
 			this.orderField = {};
-			this.orderField[field] = 'desc';
+			this.orderField[nameField] = 'desc';
 		} else {
 			this.orderField = {};
-			this.orderField[field] = 'asc';
+			this.orderField[nameField] = 'asc';
 		}
 
-		const ordered = (this.filter || this.model).sort((a , b) => {
-			const valueA = utils.getPropertyByString(a, field);
-			const valueB = utils.getPropertyByString(b, field);
+		const model = this.filter || this.model;
 
-			if (valueA > valueB) return greater;
-			else if (valueA < valueB) return less;
-			return 0;
-		});
+		let ordered = null;
+
+		if (field.order) {
+			ordered = model.sort((a, b) => field.order(a, b) * greater);
+		} else {
+			ordered = model.sort((a , b) => {
+				const valueA = utils.getPropertyByString(a, nameField);
+				const valueB = utils.getPropertyByString(b, nameField);
+
+				if (valueA > valueB) return greater;
+				else if (valueA < valueB) return less;
+				return 0;
+			});
+		}
 
 		this.reload(ordered);
 	}
