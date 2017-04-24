@@ -1,12 +1,18 @@
 import utils from './utils.js';
 
 export default class Table {
-	constructor(config, model) {
+	constructor(config) {
 		this.config = config;
 		this.fields = config.fields;
-		this.model = model;
 
 		this.orderField = {};
+
+		this.currentPage = 1;
+	}
+
+	setModel(model) {
+		this.model = model;
+		this.__setPagination();
 	}
 
 	load(callback) {
@@ -18,7 +24,19 @@ export default class Table {
 
 	reload(body = null) {
 		this.filter = body;
+		this.__setPagination();
 		this.render(this);
+	}
+
+	__setPagination() {
+		const model = this.filter || this.model;
+		const total = parseInt(model.length / this.config.pagination.limit);
+
+		this.totalPages = model.length % this.config.pagination.limit === 0 ? total : total + 1;
+
+		if (model.length < this.config.pagination.limit * this.currentPage) {
+			this.currentPage = this.totalPages;
+		}
 	}
 
 	simpleSearch(searchText) {
@@ -66,12 +84,10 @@ export default class Table {
 	order(field) {
 		const nameField = field.field;
 
-		let greater = 1;
-		let less = -1;
+		let order = 1;
 
 		if (this.orderField[nameField] === 'asc') {
-			greater = -1;
-			less = 1;
+			order = -1;
 			this.orderField = {};
 			this.orderField[nameField] = 'desc';
 		} else {
@@ -84,14 +100,14 @@ export default class Table {
 		let ordered = null;
 
 		if (field.order) {
-			ordered = model.sort((a, b) => field.order(a, b) * greater);
+			ordered = model.sort((a, b) => field.order(a, b) * order);
 		} else {
 			ordered = model.sort((a , b) => {
 				const valueA = utils.getPropertyByString(a, nameField);
 				const valueB = utils.getPropertyByString(b, nameField);
 
-				if (valueA > valueB) return greater;
-				else if (valueA < valueB) return less;
+				if (valueA > valueB) return order;
+				else if (valueA < valueB) return -order;
 				return 0;
 			});
 		}

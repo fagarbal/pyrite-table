@@ -1,5 +1,6 @@
 export default {
 	table: "table-example",
+	loading: "table-loading",
 
 	fields: [{
 		title: "Username",
@@ -35,7 +36,7 @@ export default {
 		title: "Email",
 		field: "email",
 		template(row) {
-			return `<a href="mailto:${row.email}">${row.email}<a>`;
+			return `<a href="mailto:${row.email}">${row.email}</a>`;
 		}
 	}],
 
@@ -45,7 +46,11 @@ export default {
 	},
 
 	text: {
-		total: "total-text",
-		filter: "filter-text"
+		id: "text"
+	},
+
+	pagination: {
+		id: "pagination",
+		limit: 10
 	}
 };

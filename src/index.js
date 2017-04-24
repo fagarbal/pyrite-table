@@ -6,14 +6,23 @@ class Table {
 		if (!config) throw new Error('Argument 1 is missing: configuration json');
 		if (!model) throw new Error('Argument 2 is missing: array model');
 
-		const tableLogic = new TableLogic(config, model);
+		const tableLogic = new TableLogic(config);
 
-		const onLoad = () => {
+		const loadTable = (result) => {
+			tableLogic.setModel(result);
 			const tableDom = new TableDom(config);
 
 			tableLogic.load(tableDom.draw.bind(tableDom));
+		}
 
-			window.removeEventListener('DOMContentLoaded', onLoad)
+		const onLoad = () => {
+			if (typeof model.then === 'function') {
+				model.then(loadTable);
+			} else {
+				loadTable(model);
+			}
+
+			window.removeEventListener('DOMContentLoaded', onLoad);
 		};
 
 		window.addEventListener('DOMContentLoaded', onLoad);

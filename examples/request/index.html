@@ -16,24 +16,35 @@
 		<div class="container">
 			<h2>Table Example</h2>
 
-			<div class="form-group">
-				<div class="row">
-					<div class="col-xs-12 col-sm-7 col-md-6 col-lg-5">
-						<p>Simple search:</p>
+			<div class="row">
+				<div class="form-group col-xs-12 col-sm-7 col-md-6 col-lg-5">
+					<p>Simple search:</p>
 
-						<div class="input-group">
-							<input id="input-search" type="search" class="form-control" placeholder="Search...">
-							<span class="input-group-btn">
-								<button id="button-search" class="btn btn-primary">
-									<span>Search</span>
-									<i class="fa fa-search"></i>
-								</button>
-							</span>
+					<div class="input-group">
+						<input id="input-search" type="search" class="form-control" placeholder="Search...">
+						<span class="input-group-btn">
+							<button id="button-search" class="btn btn-primary">
+								<span>Search</span>
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group col-xs-12 col-sm-5 col-lg-5">
+					<p>Items per page:</p>
+
+					<div class="row">
+						<div class="col-xs-4">
+							<select class="form-control col-lg-2" id="pagination-select">
+							    <option>10</option>
+							    <option>20</option>
+							    <option>50</option>
+							    <option>100</option>
+							 </select>
 						</div>
 					</div>
 				</div>
 			</div>
-
 
 			<div class="form-group">
 				<p>Advanced search:</p>
@@ -91,16 +102,30 @@
 				</div>
 			</div>
 
-
 			<div class="table-responsive">
+				<p class="text-center" id="table-loading">
+					<i class="text-primary fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i>
+				</p>
 				<table id="table-example" class="table table-striped table-bordered"></table>
 			</div>
 
-			<p class="pull-right">
-				<span>Showing </span>
-				<strong id="filter-text">0</strong>
+			<p class="pull-left" id="pagination" hidden>
+				<button id="pagination-first" class="btn btn-primary btn-xs">&lt;&lt;</button>
+				<button id="pagination-previous" class="btn btn-primary btn-xs">&lt;</button>
+				<span> page </span>
+				<strong id="pagination-current">0</strong>
 				<span> of </span>
-				<strong id="total-text">0</strong>
+				<strong id="pagination-total">0</strong>
+				<span> pages </span>
+				<button id="pagination-next" class="btn btn-primary btn-xs">&gt;</button>
+				<button id="pagination-last" class="btn btn-primary btn-xs">&gt;&gt;</button>
+			</p>
+
+			<p class="pull-right" id="text" hidden>
+				<span>Showing </span>
+				<strong id="text-filter">0</strong>
+				<span> of </span>
+				<strong id="text-total">0</strong>
 				<span> results</span>
 			</p>
 		</div>
