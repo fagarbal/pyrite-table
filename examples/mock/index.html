@@ -91,16 +91,30 @@
 				</div>
 			</div>
 
-
 			<div class="table-responsive">
+				<p class="text-center" id="table-loading">
+					<i class="text-primary fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i>
+				</p>
 				<table id="table-example" class="table table-striped table-bordered"></table>
 			</div>
 
-			<p class="pull-right">
-				<span>Showing </span>
-				<strong id="filter-text">0</strong>
+			<p class="pull-left" id="pagination" hidden>
+				<button id="pagination-first" class="btn btn-primary btn-xs">&lt;&lt;</button>
+				<button id="pagination-previous" class="btn btn-primary btn-xs">&lt;</button>
+				<span> page </span>
+				<strong id="pagination-current">0</strong>
 				<span> of </span>
-				<strong id="total-text">0</strong>
+				<strong id="pagination-total">0</strong>
+				<span> pages </span>
+				<button id="pagination-next" class="btn btn-primary btn-xs">&gt;</button>
+				<button id="pagination-last" class="btn btn-primary btn-xs">&gt;&gt;</button>
+			</p>
+
+			<p class="pull-right" id="text" hidden>
+				<span>Showing </span>
+				<strong id="text-filter">0</strong>
+				<span> of </span>
+				<strong id="text-total">0</strong>
 				<span> results</span>
 			</p>
 		</div>

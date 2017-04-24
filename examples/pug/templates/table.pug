@@ -1,13 +1,33 @@
 mixin pyrite-table
 	.table-responsive
+		p.text-center(id=attributes.loading)
+			i.text-primary.fa.fa-circle-o-notch.fa-spin.fa-5x.fa-fw
 		table.table.table-striped.table-bordered(id=attributes.id)
-	p.pull-right
-		| Showing
+
+	p.pull-left(id=attributes.pagination, hidden)
+		button.btn.btn-primary.btn-xs(id=attributes.pagination + '-first') &lt;&lt;
+		button.btn.btn-primary.btn-xs(id=attributes.pagination + '-previous') &lt;
 		|
-		strong(id=attributes.filter) 0
+		| page
+		|
+		strong(id=attributes.pagination + '-current') 0
 		|
 		| of
 		|
-		strong(id=attributes.total) 0
+		strong(id=attributes.pagination + '-total') 0
+		|
+		| pages
+		|
+		button.btn.btn-primary.btn-xs(id=attributes.pagination + '-next') &gt;
+		button.btn.btn-primary.btn-xs(id=attributes.pagination + '-last') &gt;&gt;
+
+	p.pull-right(id=attributes.text, hidden)
+		| Showing
+		|
+		strong(id=attributes.text + '-filter') 0
+		|
+		| of
+		|
+		strong(id=attributes.text + '-total') 0
 		|
 		| results

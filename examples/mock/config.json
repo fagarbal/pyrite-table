@@ -1,5 +1,6 @@
 {
 	"table": "table-example",
+	"loading": "table-loading",
 
 	"fields": [{
 		"title": "Name",
@@ -28,7 +29,11 @@
 	},
 
 	"text": {
-		"total": "total-text",
-		"filter": "filter-text"
+		"id": "text"
+	},
+
+	"pagination": {
+		"id": "pagination",
+		"limit": 3
 	}
 }

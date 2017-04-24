@@ -53,6 +53,7 @@ pyrite.Table.load(config, model);
 ``` javascript
 {
 	table: "id-table",
+	loading: "id-loading",
 
 	fields: [{
 		title: "Col Title",
@@ -69,14 +70,18 @@ pyrite.Table.load(config, model);
 		}
 	}, ... ],
 
-	"search": {
-		"id": "id-for-global-search",
-		"fields": ["property.in.model", "another.property", ... ] // Optional: By default all fields.
+	search: {
+		id: "id-for-global-search",
+		fields: ["property.in.model", "another.property", ... ] // Optional: By default all fields.
 	},
 
-	"text": {
-		"total": "id-total-text",
-		"filter": "id-filter-text"
+	text: {
+		id: "id-text"
+	},
+
+	pagination: {
+		id: "id-pagination",
+		limit: Number // Number of results per page.
 	}
 }
 ```

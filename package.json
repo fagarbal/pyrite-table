@@ -1,6 +1,6 @@
 {
   "name": "pyrite-table",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Table Component VanillaJS",
   "main": "src/index.js",
   "dependencies": {},

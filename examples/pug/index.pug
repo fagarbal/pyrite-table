@@ -16,18 +16,27 @@ html
 		.container
 			h2 Table Example
 
-			.form-group
-				.row
-					.col-xs-12.col-sm-7.col-md-6.col-lg-5
-						p Simple search:
+			.row
+				.form-group.col-xs-12.col-sm-7.col-md-6.col-lg-5
+					p Simple search:
 
-						+pyrite-table-input(
-							id='search'
-							placeholder='Search...'
-							text='Search'
-							color='btn-primary'
-							icon='fa fa-search'
-						)
+					+pyrite-table-input(
+						id='search'
+						placeholder='Search...'
+						text='Search'
+						color='btn-primary'
+						icon='fa fa-search'
+					)
+				.form-group.col-xs-12.col-sm-5.col-lg-5
+					p Items per page:
+
+					.row
+						.col-xs-4
+							select#pagination-select.form-control
+								option 10
+								option 20
+								option 50
+								option 100
 
 			.form-group
 				p Advanced search:
@@ -68,6 +77,7 @@ html
 
 			+pyrite-table(
 				id='table-example'
-				total='total-text'
-				filter='filter-text'
+				loading='table-loading'
+				text='text'
+				pagination='pagination'
 			)
